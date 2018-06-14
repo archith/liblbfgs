@@ -492,7 +492,7 @@ int lbfgs(
 
         /* Report the progress. */
         if (cd.proc_progress) {
-            char *savefile_path = (char *)calloc(2000, sizeof(char));
+            savefile_path = (char *)calloc(2000, sizeof(char));
             sprintf(savefile_path, intermittent_save_path_fmt, k);
             if ((ret = cd.proc_progress(cd.instance, x, g, fx, xnorm, gnorm, step, savefile_path, cd.n, k, ls))) {
                 goto lbfgs_exit;
