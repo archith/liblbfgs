@@ -277,6 +277,7 @@ int lbfgs(
     cd.instance = instance;
     cd.proc_evaluate = proc_evaluate;
     cd.proc_progress = proc_progress;
+    char *savefile_path = NULL;
 
 #if     defined(USE_SSE) && (defined(__SSE__) || defined(__SSE2__))
     /* Round out the number of variables. */
@@ -491,11 +492,13 @@ int lbfgs(
 
         /* Report the progress. */
         if (cd.proc_progress) {
-            char *savefile_path = (char *)malloc(2000*sizeof(char));
+            char *savefile_path = (char *)calloc(2000, sizeof(char));
             sprintf(savefile_path, intermittent_save_path_fmt, k);
             if ((ret = cd.proc_progress(cd.instance, x, g, fx, xnorm, gnorm, step, savefile_path, cd.n, k, ls))) {
                 goto lbfgs_exit;
             }
+            free(savefile_path);
+            savefile_path = NULL;
         }
 
         /*
@@ -618,6 +621,13 @@ int lbfgs(
     }
 
 lbfgs_exit:
+
+    if (savefile_path!=NULL)
+    {
+        free(savefile_path);
+        savefile_path = NULL;
+    }
+
     /* Return the final value of the objective function. */
     if (ptr_fx != NULL) {
         *ptr_fx = fx;
