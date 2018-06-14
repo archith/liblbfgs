@@ -411,6 +411,7 @@ typedef int (*lbfgs_progress_t)(
     const lbfgsfloatval_t xnorm,
     const lbfgsfloatval_t gnorm,
     const lbfgsfloatval_t step,
+    const char* savefilename,
     int n,
     int k,
     int ls
@@ -481,7 +482,8 @@ int lbfgs(
     lbfgs_evaluate_t proc_evaluate,
     lbfgs_progress_t proc_progress,
     void *instance,
-    lbfgs_parameter_t *param
+    lbfgs_parameter_t *param,
+    const char* intermittent_save_path_fmt
     );
 
 /**

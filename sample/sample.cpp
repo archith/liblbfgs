@@ -39,7 +39,7 @@ public:
             Start the L-BFGS optimization; this will invoke the callback functions
             evaluate() and progress() when necessary.
          */
-        int ret = lbfgs(N, m_x, &fx, _evaluate, _progress, this, NULL);
+        int ret = lbfgs(N, m_x, &fx, _evaluate, _progress, this, NULL, "sample_model%03d.crfmodel");
 
         /* Report the result. */
         printf("L-BFGS optimization terminated with status code = %d\n", ret);

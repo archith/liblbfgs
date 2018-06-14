@@ -249,7 +249,8 @@ int lbfgs(
     lbfgs_evaluate_t proc_evaluate,
     lbfgs_progress_t proc_progress,
     void *instance,
-    lbfgs_parameter_t *_param
+    lbfgs_parameter_t *_param,
+    const char* intermittent_save_path_fmt
     )
 {
     int ret;
@@ -490,7 +491,9 @@ int lbfgs(
 
         /* Report the progress. */
         if (cd.proc_progress) {
-            if ((ret = cd.proc_progress(cd.instance, x, g, fx, xnorm, gnorm, step, cd.n, k, ls))) {
+            char *savefile_path = (char *)malloc(2000*sizeof(char));
+            sprintf(savefile_path, intermittent_save_path_fmt, k);
+            if ((ret = cd.proc_progress(cd.instance, x, g, fx, xnorm, gnorm, step, savefile_path, cd.n, k, ls))) {
                 goto lbfgs_exit;
             }
         }

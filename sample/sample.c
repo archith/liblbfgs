@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
         Start the L-BFGS optimization; this will invoke the callback functions
         evaluate() and progress() when necessary.
      */
-    ret = lbfgs(N, x, &fx, evaluate, progress, NULL, &param);
+    ret = lbfgs(N, x, &fx, evaluate, progress, NULL, &param, "sample_model%03d.crfmodel");
 
     /* Report the result. */
     printf("L-BFGS optimization terminated with status code = %d\n", ret);
